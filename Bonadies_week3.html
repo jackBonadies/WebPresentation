@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="author" content="Phil Barello" />
+  <title>Microsoft's Switch to Chromium and the Health of the Web</title>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="scripts/slidy.css" /> <!-- http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css -->
+  <script src="scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script> <!-- http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js-->
+  <script src="scripts/jquery-3.3.1.min.js"
+    charset="utf-8" type="text/javascript"></script> <!-- https://code.jquery.com/jquery-3.3.1.min.js -->
+  <script type="text/javascript" src="scripts/qrcode.js"></script>
+</head>
+
+<style>
+
+  /* two-colomn layout */
+  * {
+    box-sizing: border-box;
+    background-color: #c2e6ff;
+  }
+
+  /* Create two equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .right-side-image {
+    float: right;
+    width: 300px;
+    border: 0px solid #004480;
+    padding: 10px;
+  }
+
+  /* global properties to apply to all images */
+  .img {
+    float: left;
+  }
+
+  /* qrcode generator image size */
+  #qrcode {
+    width:160px;
+    height:160px;
+    margin-top:15px;
+  }
+
+  /* email link */
+  a.email:link {color:#eeff00;}
+  a.email:hover {color:#ff00ee; background:#66ff66;}
+</style>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Rethinking the URL<br><font color = "#000080" style="font-size:25px" > </font></h1>
+  <br>
+  <p class="author">by Jack Bonadies</p>
+</div>
+<div class="section slide level1" id="this">
+  <h1>First, Some New Buttons</h1>
+  <ul>
+    <li>I have created a toolbar at the bottom of the screen with 4 new buttons</li>
+    <li>All of them use JavaScript to modify the CSS style of the HTML elements, specifically background color and font size</li>
+    <li>They use DOM functions such as get elements by Tag, ID, as well as JS functions from the math library like rand()</li>
+    <li>Take a second to try them out....</li>
+  </ul>
+</div>
+<div class="section slide level1" id="this">
+  <h1>Emily Stark's Proposal</h1>
+  <ul class="incremental">
+    <li>The title is a bit misleading, Google is not trying to do away with URLs (at least for the meantime), it is merely trying to convey them to the end user in a way that is less prone to vulnerabilities.</li>
+    <li>Websites use URLs as the primary way to show the user who they are.  Since the introduction DNS, this has proven to be the most effective way to navigate the web where previously one would have to memorize an IP address.</li>
+    <li>In increase of website spoofing (spidering a site, modifying it for use for phishing, hosting it at a URL close to the original) has prompted new approaches to the URL</li>
+    <li>The article proposes a new standard practice relating to how websites identify themselves to the user.  With this proposal comes tools such as TrickURI, the Safe Browsing Platform, and various heuristics.</li>
+  </ul>
+</div>
+<div class="section slide level1" id="this">
+  <h1>Implications</h1>
+  <ul class="incremental">
+    <li>Since DNS servers (used primarily to resolve an IP from a URL) contain DNS entries with information other than just the IP, this information can be used to further confirm or deny the identity of a site</li>
+    <li>For example, these records can often point to how long a site has been around and how frequently a domain has changed hands.  For example, a browser could alert the user if the site has been around for less than a year for example when visiting facebo0k</li>
+    <li>Google Safe Browsing uses a list of unsafe web resources which it constantly checks against.  How sustainable this is is questionable however, it has not yet seen widespread use</li>
+    <li>TrickURI uses heuristics involving frequently spoofed characters (ex. Cyrillic e's), unfamiliar ports, http, in order to check unsafe resources. However, without these checks becoming standard practice the effects may be limited</li>
+  </ul>
+</div>
+<div class="section slide level1" id="this">
+  <h1>Potential Consequences</h1>
+  <ul class="incremental">
+    <li>With techniques such as a list of unsafe sites to check against the questions of centralization and sustainability arise.  Particularly, who decides which sites make the list (potential for abuse), who serves this list (and how will different servers remain consistent), and how does one make this a standard practice for all browsers to undertake?</li>
+    <li>With TrickURI there is always the possibility of false positives, i.e. sites that are legitimate that are flagged as illegitimate and suffer, there is no one size fits all approach nor will there be one universally agreed upon</li>
+    <li>With false positives in general, it is likely the burden will fall on smaller and lesser used sites.  This will reduce democratic and decentralized principles of the internet.</li>
+  </ul>
+</div>
+<div class="section slide level1" id="this">
+  <h1>Overall</h1>
+  <ul class="incremental">
+    <li>I do see the number of phishing sites in conjunction with URL shorteners to be disconcerting</li>
+    <li>I do not see the solution as changing the infrastructure of the web (at least with the current proposals) however browser based solutions such as highlighting the domain name, warning the user when nonstandard characters are present, and suggesting warnings based on a list of frequently flagged sites, may all be useful</li>
+    <li>The decentralized nature of the internet certainly has its downfalls in relation to security, it's extremely difficult to shut down harmful and illegal websites as well as regulate sites for malicious content.</li>
+    <li>I like how this article ties into the last one regarding Google, as a large player in the market, using its weight to implement changes (i.e. the adoption of Chromium in the last article, and the possible adoption of new methods to convey URLs in this one).  One article attributed the near ubiquitous adoption of https to Google using its weight.</li>
+  </ul>
+</div>
+<div class="section slide level1" id="this">
+  <h1>Sources</h1>
+    <ul><li>Newman, Lily (2018, July 17) <em>How Google's Safe Browsing Helps Build a More Secure Web</em> Retrieved from https://www.wired.com/story/google-safe-browsing-oral-history/</li><li>Southern, Matt (2019, February 8) <em> Google Search Console’s Inspect URL Tool</em> Retrieved from https://www.searchenginejournal.com/google-search-consoles-inspect-url-tool-is-only-useful-for-webpages/</li><li>Schwartz, Barry (2019, February 8) <em>Bing Strongly Recommends Publishers Use The Submit URL Tool</em> Retrieved from https://www.seroundtable.com/bing-recommends-submit-url-tool-27084.html</li>
+    </ul>
+</div>
+<span class="foot">
+      <button class="buttons" onclick="backgroundChanger()">Pastel Background Button</button>
+      <button class="buttons" onclick="everythingChanger()">Everything Pastel</button>
+      <input id="bsize" style="float:left;height:100%;" class="buttons" type="number" value="20" size="100" name="bsize"></input>
+      <button class="buttons"  style="float:left;" onclick="fontChanger('b')">Change (body)</button>
+      <input id="hsize" style="float:left;height:100%;" class="buttons" type="number" value="35" size="100" name="hsize"></input>
+      <button class="buttons" style="float:left;" onclick="fontChanger('h')">Change (header)</button>
+</span>
+<script>
+  function fontChanger(bodyOrHeader){
+    var els;
+    var newSize;
+    if(bodyOrHeader=='b'){
+      els = document.querySelectorAll("p,li,ul,ol");
+      newSize = document.getElementById("bsize").value;
+    }
+    else{
+      els = document.querySelectorAll("h1");
+      newSize = document.getElementById("hsize").value;
+    }
+    for(var i=0;i<els.length;i++){
+      els[i].style.fontSize=newSize + "px";
+    }
+  }
+  function everythingChanger(){
+    var els = document.getElementsByTagName("*");
+    for(var i=0;i<els.length;i++){
+      var color = "hsl("  + Math.floor(Math.random() * 360) + ", 40%, 87%)";
+      if(els[i].nodeName!="BUTTON"){els[i].style.backgroundColor=color;}
+    }
+  }
+  function backgroundChanger(){
+    var els = document.getElementsByTagName("*");
+    var color = "hsl("  + Math.floor(Math.random() * 360) + ", 40%, 87%)";
+    for(var i=0;i<els.length;i++){
+      if(els[i].nodeName!="BUTTON"){els[i].style.backgroundColor=color;}
+    }
+  }
+</script>
+</body>
+</html>
