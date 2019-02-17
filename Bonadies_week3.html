@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="author" content="Phil Barello" />
-  <title>Microsoft's Switch to Chromium and the Health of the Web</title>
+  <title>Alexa Origin and Relation</title>
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
     href="scripts/slidy.css" /> <!-- http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css -->
   <script src="scripts/slidy.js"
@@ -14,14 +14,14 @@
   <script src="scripts/jquery-3.3.1.min.js"
     charset="utf-8" type="text/javascript"></script> <!-- https://code.jquery.com/jquery-3.3.1.min.js -->
   <script type="text/javascript" src="scripts/qrcode.js"></script>
+  <script src="plotly.min.js"></script>
 </head>
 
 <style>
 
   /* two-colomn layout */
-  * {
+  *:not(#myDiv) {
     box-sizing: border-box;
-    background-color: #c2e6ff;
   }
 
   /* Create two equal columns that floats next to each other */
@@ -56,6 +56,17 @@
     height:160px;
     margin-top:15px;
   }
+  #myDiv{
+    z-index:200;
+    background-color: white;
+
+  }
+  body{
+    background-color:#90cecb;
+  }
+  .hiddenTitle{
+    visibility: hidden;
+  }
 
   /* email link */
   a.email:link {color:#eeff00;}
@@ -63,62 +74,119 @@
 </style>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">Rethinking the URL<br><font color = "#000080" style="font-size:25px" > </font></h1>
+  <h1 class="title">Alexa: Origin and Relation to the Web<br><font color = "#000080" style="font-size:25px" > </font></h1>
   <br>
   <p class="author">by Jack Bonadies</p>
 </div>
 <div class="section slide level1" id="this">
-  <h1>First, Some New Buttons</h1>
-  <ul>
-    <li>I have created a toolbar at the bottom of the screen with 4 new buttons</li>
-    <li>All of them use JavaScript to modify the CSS style of the HTML elements, specifically background color and font size</li>
-    <li>They use DOM functions such as get elements by Tag, ID, as well as JS functions from the math library like rand()</li>
-    <li>Take a second to try them out....</li>
+  <h1>The power of web traffic analyzers (such as Alexa)</h1>
+  <p> Using web traffic analyzers one can see patterns in their traffic and how to better market their site.</p>
+  <p> In this example, have gathered web traffic data from the site <a href=https://www.similarweb.com/website/coinbase.com>SimilarWeb.</a></p>
+  <p> I chose the site 'coinbase.com' as I figured that there would be some fluctuation in traffic and interest due to hype.  The data also shows which countries this site is most popular in.</p>
+  <p> Use the file selector to select the .csv file 'coinbaseData.csv' this data will be parsed and using the library plotly it will be displayed.</p>
+  <h3 class="hiddenTitle">Number of Visitors by Month (August 2018 to January 2019)</h3>
+  <div id='graph1'></div>
+  <h3 class="hiddenTitle">Percent of Visitors by Country</h3>
+  <div id='graph2'></div>
+  <input type='file' id='f01'>
+  <script>
+    function splitByComma(txt){
+      var array1 = txt.split('\n');
+      return array1;
+    }
+    window.onload = function() {
+     //run this once the page loads
+     document.getElementById('f01').addEventListener('change',function(e) {
+       var file = document.getElementById('f01').files[0];
+       var reader = new FileReader();
+       reader.onload = function(e) {//this is what readAsText calls
+         var lines = splitByComma(reader.result);
+         var arr1 = [];
+         var arr2 = [];
+         var arr3 = [];
+         var arr4 = [];
+         for (var i=0;i<6;i++){
+           arr1.push(lines[i].substr(0,lines[i].indexOf(',')));
+           arr2.push(lines[i].substr(lines[i].indexOf(','),lines[0].length));
+         }
+         for (var i=6;i<12;i++){
+           arr3.push(lines[i].substr(0,lines[i].indexOf(',')));
+           arr4.push(lines[i].substr(lines[i].indexOf(','),lines[0].length));
+         }
+         var data = [
+           {
+             x: arr1,
+             y: arr2,
+             type:'bar',
+             title:'Data Labels Hover'
+           }
+         ];
+         Plotly.newPlot('graph1',data);
+         var data1 = [
+           {
+             x: arr3,
+             y: arr4,
+             type:'bar',
+             title:'Data Labels Hover'
+           }
+         ];
+         Plotly.newPlot('graph2',data1);
+         var elements = document.getElementsByClassName("hiddenTitle");
+         elements[0].style.visibility = "visible";
+         elements[1].style.visibility = "visible";
+       }
+       reader.readAsText(file);
+     });
+   }
+  </script>
+</div>
+<div class="section slide level1" id="this">
+  <h1>Alexa's Origins</h1>
+  <ul class="incremental">
+    <li>Alexa was founded in 1996 to generate and analyze web traffic data</li>
+    <li>Since the company's inception it has provided a set of extensions and toolbars in order to both collect web traffic (in the form of page visits, time spent, hyperlink path) and display site statistics (traffic, rank, authority)</li>
+    <li>Gathering data and analyzing data has only grown as fields such as machine learning have proven successful though requiring large amounts of data.</li>
   </ul>
 </div>
 <div class="section slide level1" id="this">
-  <h1>Emily Stark's Proposal</h1>
+  <h1>Relationship with the Web in the Past</h1>
   <ul class="incremental">
-    <li>The title is a bit misleading, Google is not trying to do away with URLs (at least for the meantime), it is merely trying to convey them to the end user in a way that is less prone to vulnerabilities.</li>
-    <li>Websites use URLs as the primary way to show the user who they are.  Since the introduction DNS, this has proven to be the most effective way to navigate the web where previously one would have to memorize an IP address.</li>
-    <li>In increase of website spoofing (spidering a site, modifying it for use for phishing, hosting it at a URL close to the original) has prompted new approaches to the URL</li>
-    <li>The article proposes a new standard practice relating to how websites identify themselves to the user.  With this proposal comes tools such as TrickURI, the Safe Browsing Platform, and various heuristics.</li>
+    <li>AlexaRank has been one of the most popular page ranking methods since its inception</li>
+    <li>It has allowed users to quickly evaluate websites based on their rankings (and thus determine their credibility and worth, especially useful for those in the market to purchase a site/domain)</li>
+    <li>These rankings are based on the last 3 months of aggregated web traffic from an estimated 10 million toolbar users and uses a proprietary algorithm to combine page views and unique visitors</li>
+    <li>It can also assist users in determining how their traffic is changing by comparing their metric with the past metric 3 months ago</li>
   </ul>
 </div>
 <div class="section slide level1" id="this">
-  <h1>Implications</h1>
+  <h1>Relationship with the Web Now</h1>
   <ul class="incremental">
-    <li>Since DNS servers (used primarily to resolve an IP from a URL) contain DNS entries with information other than just the IP, this information can be used to further confirm or deny the identity of a site</li>
-    <li>For example, these records can often point to how long a site has been around and how frequently a domain has changed hands.  For example, a browser could alert the user if the site has been around for less than a year for example when visiting facebo0k</li>
-    <li>Google Safe Browsing uses a list of unsafe web resources which it constantly checks against.  How sustainable this is is questionable however, it has not yet seen widespread use</li>
-    <li>TrickURI uses heuristics involving frequently spoofed characters (ex. Cyrillic e's), unfamiliar ports, http, in order to check unsafe resources. However, without these checks becoming standard practice the effects may be limited</li>
+    <li>Fields such as Machine Learning and techniques such as Search Engine Optimization are only growing.  Web traffic data can be used to fuel both of these areas.</li>
+    <li>The number of web users is ever increasing, however, the number of users with the Alexa toolbar is estimated to be very small, only around 10 million.</li>
+    <li>For smaller sites, this small sample size of Alexa toolbar users may not be representative</li>
+    <li>The free option for Alexa is very limited.  In addition there are now several competitors such as SimilarWeb, Quantcast, and Traffic Estimate.  All of these estimate website traffic, providing the same set (or more) of metrics Alexa provides</li>
+    <li>Alternatively, users may want to focus more on Google PageRank, though this is not a rank of traffic, it is highly correlated.  The better the PageRank, the more links to the page and the higher up in the Google Search results</li>
   </ul>
 </div>
 <div class="section slide level1" id="this">
-  <h1>Potential Consequences</h1>
+  <h1>Relationship with the Web in the Future</h1>
   <ul class="incremental">
-    <li>With techniques such as a list of unsafe sites to check against the questions of centralization and sustainability arise.  Particularly, who decides which sites make the list (potential for abuse), who serves this list (and how will different servers remain consistent), and how does one make this a standard practice for all browsers to undertake?</li>
-    <li>With TrickURI there is always the possibility of false positives, i.e. sites that are legitimate that are flagged as illegitimate and suffer, there is no one size fits all approach nor will there be one universally agreed upon</li>
-    <li>With false positives in general, it is likely the burden will fall on smaller and lesser used sites.  This will reduce democratic and decentralized principles of the internet.</li>
-  </ul>
-</div>
-<div class="section slide level1" id="this">
-  <h1>Overall</h1>
-  <ul class="incremental">
-    <li>I do see the number of phishing sites in conjunction with URL shorteners to be disconcerting</li>
-    <li>I do not see the solution as changing the infrastructure of the web (at least with the current proposals) however browser based solutions such as highlighting the domain name, warning the user when nonstandard characters are present, and suggesting warnings based on a list of frequently flagged sites, may all be useful</li>
-    <li>The decentralized nature of the internet certainly has its downfalls in relation to security, it's extremely difficult to shut down harmful and illegal websites as well as regulate sites for malicious content.</li>
-    <li>I like how this article ties into the last one regarding Google, as a large player in the market, using its weight to implement changes (i.e. the adoption of Chromium in the last article, and the possible adoption of new methods to convey URLs in this one).  One article attributed the near ubiquitous adoption of https to Google using its weight.</li>
+    <li>According to Alexa's own site, the traffic to Alexa has gone down steadily in the past 6 months.</li>
+    <li>Due to the increase in spoofing and phishing attacks, as discussed in the previous article, it may be useful for Alexa to allow those with the Alexa toolbar to flag sites.</li>
+    <li>Flagging in addition to popularity (facebook will be much more popular than faceb00k) may provide a metric of 'trust' for the user.</li>
+    <li>In this way the web will still be decentralized and anonymous while protecting against the worst excesses these two virtues tend towards (security and cybercrime).</li>
   </ul>
 </div>
 <div class="section slide level1" id="this">
   <h1>Sources</h1>
-    <ul><li>Newman, Lily (2018, July 17) <em>How Google's Safe Browsing Helps Build a More Secure Web</em> Retrieved from https://www.wired.com/story/google-safe-browsing-oral-history/</li><li>Southern, Matt (2019, February 8) <em> Google Search Console’s Inspect URL Tool</em> Retrieved from https://www.searchenginejournal.com/google-search-consoles-inspect-url-tool-is-only-useful-for-webpages/</li><li>Schwartz, Barry (2019, February 8) <em>Bing Strongly Recommends Publishers Use The Submit URL Tool</em> Retrieved from https://www.seroundtable.com/bing-recommends-submit-url-tool-27084.html</li>
+    <ul><li>Starak, Yaro (2017, October 10) <em>How Does AlexaRank Work And Should You Pay It Any Attention?</em> Retrieved from https://yaro.blog/549/how-does-alexarank-work/</li><li>Lee, Joel (2018, November 25) <em> The 7 Best Sites to Track a Website's Traffic</em> Retrieved from https://www.makeuseof.com/tag/6-websites-to-track-a-websites-traffic/</li><li>Purely Branded (2014, November 1) <em>Top 10 Website Analytics You Should Be Measuring AND Learning From</em> Retrieved from https://www.purelybranded.com/insights/top-10-website-analytics-you-should-be-measuring-and-learning-from/</li>
+      <li>Visualization Library: Plotly https://plot.ly/</li>
+      <li>Data from SimilarWeb https://www.similarweb.com/website/coinbase.com</li>
+      <li>CSV reading based on the FileReader class https://blog.teamtreehouse.com/reading-files-using-the-html5-filereader-api</li>
     </ul>
 </div>
 <span class="foot">
-      <button class="buttons" onclick="backgroundChanger()">Pastel Background Button</button>
-      <button class="buttons" onclick="everythingChanger()">Everything Pastel</button>
+      <button class="buttons" onclick="">Pastel Background Button</button>
+      <button class="buttons" onclick="">Everything Pastel</button>
       <input id="bsize" style="float:left;height:100%;" class="buttons" type="number" value="20" size="100" name="bsize"></input>
       <button class="buttons"  style="float:left;" onclick="fontChanger('b')">Change (body)</button>
       <input id="hsize" style="float:left;height:100%;" class="buttons" type="number" value="35" size="100" name="hsize"></input>
