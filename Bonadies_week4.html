@@ -5,8 +5,8 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="author" content="Phil Barello" />
-  <title>Alexa Origin and Relation</title>
+  <meta name="author" content="Jack Bonadies" />
+  <title>Open Source vs Proprietary</title>
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
     href="scripts/slidy.css" /> <!-- http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css -->
   <script src="scripts/slidy.js"
@@ -59,13 +59,19 @@
   #myDiv{
     z-index:200;
     background-color: white;
-
+  }
+  .changer{
+    line-height: inherit;
+    text-decoration: none;
   }
   body{
     background-color:#90cecb;
   }
   .hiddenTitle{
     visibility: hidden;
+  }
+  #source{
+    display: none;
   }
 
   /* email link */
@@ -74,114 +80,129 @@
 </style>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">Alexa: Origin and Relation to the Web<br><font color = "#000080" style="font-size:25px" > </font></h1>
+  <h1 class="title">Open Source vs Proprietary Software for business<br><font color = "#000080" style="font-size:25px" > </font></h1>
   <br>
   <p class="author">by Jack Bonadies</p>
 </div>
 <div class="section slide level1" id="this">
-  <h1>The power of web traffic analyzers (such as Alexa)</h1>
-  <p> Using web traffic analyzers one can see patterns in their traffic and how to better market their site.</p>
-  <p> In this example, have gathered web traffic data from the site <a href=https://www.similarweb.com/website/coinbase.com>SimilarWeb.</a></p>
-  <p> I chose the site 'coinbase.com' as I figured that there would be some fluctuation in traffic and interest due to hype.  The data also shows which countries this site is most popular in.</p>
-  <p> Use the file selector to select the .csv file 'coinbaseData.csv' this data will be parsed and using the library plotly it will be displayed.</p>
-  <h3 class="hiddenTitle">Number of Visitors by Month (August 2018 to January 2019)</h3>
-  <div id='graph1'></div>
-  <h3 class="hiddenTitle">Percent of Visitors by Country</h3>
-  <div id='graph2'></div>
-  <input type='file' id='f01'>
+  <h1>Why businesses should use Open Source software</h1>
+  <ul class="incremental">
+  <li>Linus' Law prevents bugs and vulnerabilities
+    <ul><li>The reading mentions a small change to OpenSSL (Open Source) introducing a vulnerability that lasted for 2.5 years. Despite this, proprietary OS's and SW (Windows, Mac, iOS, etc.) all have hosts of vulnerabilities which can go undetected or worse detected and unpatched for years</li></ul>
+  </li>
+  <li>Proximity of business to the open source community prompts sponsorship, increased eyes, increased contributors, and increased adoption
+    <ul><li>Though, corporate donations are tiny in comparison to profits make off the backs of the labor of open source developers.  Also, it can be hard to distribute donations in a way thats in line with community beliefs and values</li>
+    <li>According to the article, most open source developments come from tech employees.  A counterargument, is most of the profits made from Open Source, go back to tech companies.</li></ul>
+  </li>
+  <li>Cuts costs of redundant labor
+    <ul><li>Companies should use open source resources rather than "reinvent the wheel" on duplicate development efforts.  This wastes the labor power of society</li></ul>
+  </li>
+  <li>The "Network Externalities Assumption" that networks / standards / languages get more valuable the more nodes / conformances / speakers they include
+    <ul><li>This is very apparent with the value of the world wide web.  I could create my own set of standards for distributing / sharing information that may be technically "better" but if no one uses them other than me, they are worthless</li></ul>
+  </li>
+  <li>It is far easier to modify or learn from because the source code is available.  In this way, the Software can be altered for your specific needs and shared.</li>
+  <li>If the open source software that one uses is licensed under the GPL or other copyleft licenses, this will ensure that the company must release their SW under the same license.  This means that employees working for the company will know that their efforts will benefit the whole of society's knowledge, and that they are not squandering their own labor power.
+    <ul><li>Furthermore, a lot of employees will feel uncomfortable working on and therefore supporting the contradictory concept of "intellectual property".  Many believe that it fetters technological development, wastes social labor power, contradictorily tries to make exclusive immaterial ideas - duplicated at virtually no cost, is antisocial (excluding others, keeping info from them), and producing something many see as negative and exploitative as intellectual property is a form of Capital</li></ul>
+  </li>
   <script>
-    function splitByComma(txt){
-      var array1 = txt.split('\n');
-      return array1;
-    }
-    window.onload = function() {
-     //run this once the page loads
-     document.getElementById('f01').addEventListener('change',function(e) {
-       var file = document.getElementById('f01').files[0];
-       var reader = new FileReader();
-       reader.onload = function(e) {//this is what readAsText calls
-         var lines = splitByComma(reader.result);
-         var arr1 = [];
-         var arr2 = [];
-         var arr3 = [];
-         var arr4 = [];
-         for (var i=0;i<6;i++){
-           arr1.push(lines[i].substr(0,lines[i].indexOf(',')));
-           arr2.push(lines[i].substr(lines[i].indexOf(','),lines[0].length));
-         }
-         for (var i=6;i<12;i++){
-           arr3.push(lines[i].substr(0,lines[i].indexOf(',')));
-           arr4.push(lines[i].substr(lines[i].indexOf(','),lines[0].length));
-         }
-         var data = [
-           {
-             x: arr1,
-             y: arr2,
-             type:'bar',
-             title:'Data Labels Hover'
-           }
-         ];
-         Plotly.newPlot('graph1',data);
-         var data1 = [
-           {
-             x: arr3,
-             y: arr4,
-             type:'bar',
-             title:'Data Labels Hover'
-           }
-         ];
-         Plotly.newPlot('graph2',data1);
-         var elements = document.getElementsByClassName("hiddenTitle");
-         elements[0].style.visibility = "visible";
-         elements[1].style.visibility = "visible";
-       }
-       reader.readAsText(file);
-     });
-   }
+  function splitByComma(txt){
+    var array1 = txt.split(',');
+    return array1;
+  }
   </script>
 </div>
 <div class="section slide level1" id="this">
-  <h1>Alexa's Origins</h1>
+  <h1>Why businesses may not want to use open source software</h1>
   <ul class="incremental">
-    <li>Alexa was founded in 1996 to generate and analyze web traffic data</li>
-    <li>Since the company's inception it has provided a set of extensions and toolbars in order to both collect web traffic (in the form of page visits, time spent, hyperlink path) and display site statistics (traffic, rank, authority)</li>
-    <li>Gathering data and analyzing data has only grown as fields such as machine learning have proven successful though requiring large amounts of data.</li>
+    <li>Copyleft licenses such as the GPL (used by Linux, Apache, MySQL) may prevent the business from selling their product if it includes GPL licensed components</li>
+    <li>Guilt / Moral Reasons.
+      <ul><li>If a company commodifies and profits from the intellect of others, while declaring their own contributions to be their "intellectual property" this could create feelings of guilt or cognitive dissonance<li>
+      <li>They would be using software that benefits all of society in order to makesoftware that purposefully excludes those who can't pay as well as hiding their code so that others cannot learn from or use it.</li>
+      <li>Many believe that all knowledge claimed as intellectual property has been taken from the community.</li></ul>
+    </li>
+    <li>There may not be tech support or maintenance for open source software
+      <ul><li>Some companies such as RedHat do try to bridge this gap however, by providing paid services for open source software</li></ul>
+    </li>
   </ul>
 </div>
 <div class="section slide level1" id="this">
-  <h1>Relationship with the Web in the Past</h1>
-  <ul class="incremental">
-    <li>AlexaRank has been one of the most popular page ranking methods since its inception</li>
-    <li>It has allowed users to quickly evaluate websites based on their rankings (and thus determine their credibility and worth, especially useful for those in the market to purchase a site/domain)</li>
-    <li>These rankings are based on the last 3 months of aggregated web traffic from an estimated 10 million toolbar users and uses a proprietary algorithm to combine page views and unique visitors</li>
-    <li>It can also assist users in determining how their traffic is changing by comparing their metric with the past metric 3 months ago</li>
-  </ul>
-</div>
-<div class="section slide level1" id="this">
-  <h1>Relationship with the Web Now</h1>
-  <ul class="incremental">
-    <li>Fields such as Machine Learning and techniques such as Search Engine Optimization are only growing.  Web traffic data can be used to fuel both of these areas.</li>
-    <li>The number of web users is ever increasing, however, the number of users with the Alexa toolbar is estimated to be very small, only around 10 million.</li>
-    <li>For smaller sites, this small sample size of Alexa toolbar users may not be representative</li>
-    <li>The free option for Alexa is very limited.  In addition there are now several competitors such as SimilarWeb, Quantcast, and Traffic Estimate.  All of these estimate website traffic, providing the same set (or more) of metrics Alexa provides</li>
-    <li>Alternatively, users may want to focus more on Google PageRank, though this is not a rank of traffic, it is highly correlated.  The better the PageRank, the more links to the page and the higher up in the Google Search results</li>
-  </ul>
-</div>
-<div class="section slide level1" id="this">
-  <h1>Relationship with the Web in the Future</h1>
-  <ul class="incremental">
-    <li>According to Alexa's own site, the traffic to Alexa has gone down steadily in the past 6 months.</li>
-    <li>Due to the increase in spoofing and phishing attacks, as discussed in the previous article, it may be useful for Alexa to allow those with the Alexa toolbar to flag sites.</li>
-    <li>Flagging in addition to popularity (facebook will be much more popular than faceb00k) may provide a metric of 'trust' for the user.</li>
-    <li>In this way the web will still be decentralized and anonymous while protecting against the worst excesses these two virtues tend towards (security and cybercrime).</li>
-  </ul>
+  <h1>Who contributes to Open Source projects?</h1>
+    <p>The article mentioned that a</p>
+    <div id='graph1'></div>
+    <p>However, the data does give the total number of contributors to be: 2,060,011. Hence, to see percentage of total rather than raw number <button onclick="changeToPercentage()" class="changer"> Click Here </button> alternatively <button onclick="produceGraph()" class="changer"> Revert Back </button>.</p>
+    <p><button class="changer" onclick="showSource()">Show Data Source</button></p>
+    <div id='source'><p>Asay, Matt (2018, February 7) <em>Who really contributes to open source.</em> Retrieved from: https://www.infoworld.com/article/3253948/who-really-contributes-to-open-source.html</p></div>
+    <script>
+    function showSource(){
+      document.getElementById('source').style.display='block';
+    };
+    function produceGraph(){
+      var dataCSV = "Microsoft 4550,Google 2267,RedHat 2027,IBM 1813,Intel 1314,Amazon.com 881,SAP 747,ThoughtWorks 739,Alibaba 694,GitHub 676,Facebook 619,Tencent 605,Pivotal 591,EPAM_Systems 585,Baidu 584,Mozilla 469,Oracle 455,Unity_Technologies 414,Uber 388,Yandex 351,Shopify 345,LinkedIn 343,Suse 325,ESRI 324,Apple 292,Salesforce.com 291,VMware 271,Adobe_Systems 270,Andela 259,Cisco_Systems 233";
+      var lines = splitByComma(dataCSV);
+      var companyNames = [];
+      var companyContributions = [];
+      for (var i=0;i<lines.length;i++){
+        companyNames.push(lines[i].substr(0,lines[i].indexOf(' ')));
+        companyContributions.push(lines[i].substr(lines[i].indexOf(' '),lines[i].length));
+      }
+      console.log(companyNames.toString());
+      console.log(companyContributions.toString());
+      var data = [
+        {
+          name: 'Test',
+          x: companyNames,
+          y: companyContributions,
+          type:'bar',
+          title:'Data Labels Hover'
+        }
+      ];
+      var layout = {title:'GitHub Contributors by Company',
+                    yaxis: {title:'Number of Employees who Contribute'}
+    }
+      Plotly.newPlot('graph1',data,layout);
+    };
+    window.onload = function() {
+      produceGraph();
+    };
+    function changeToPercentage() {
+      var dataCSV = "Microsoft 4550,Google 2267,RedHat 2027,IBM 1813,Intel 1314,Amazon.com 881,SAP 747,ThoughtWorks 739,Alibaba 694,GitHub 676,Facebook 619,Tencent 605,Pivotal 591,EPAM_Systems 585,Baidu 584,Mozilla 469,Oracle 455,Unity_Technologies 414,Uber 388,Yandex 351,Shopify 345,LinkedIn 343,Suse 325,ESRI 324,Apple 292,Salesforce.com 291,VMware 271,Adobe_Systems 270,Andela 259,Cisco_Systems 233";
+      var lines = splitByComma(dataCSV);
+      var companyNames = [];
+      var companyContributions = [];
+      for (var i=0;i<lines.length;i++){
+        companyNames.push(lines[i].substr(0,lines[i].indexOf(' ')));
+        companyContributions.push(lines[i].substr(lines[i].indexOf(' '),lines[i].length));
+      }
+      for (var i=0;i<companyContributions.length;i++){
+        companyContributions[i] = companyContributions[i] / 20600.110;
+      }
+      console.log(companyNames.toString());
+      console.log(companyContributions.toString());
+      var data = [
+        {
+          name: 'Test',
+          x: companyNames,
+          y: companyContributions,
+          type:'bar',
+          title:'Data Labels Hover'
+        }
+      ];
+      var layout = {title:'GitHub Contributors by Company (Percentages)',
+                    yaxis: {title:'Percentage of Employees who Contribute'}
+    }
+      Plotly.newPlot('graph1',data,layout);
+
+    };
+    </script>
+
 </div>
 <div class="section slide level1" id="this">
   <h1>Sources</h1>
-    <ul><li>Starak, Yaro (2017, October 10) <em>How Does AlexaRank Work And Should You Pay It Any Attention?</em> Retrieved from https://yaro.blog/549/how-does-alexarank-work/</li><li>Lee, Joel (2018, November 25) <em> The 7 Best Sites to Track a Website's Traffic</em> Retrieved from https://www.makeuseof.com/tag/6-websites-to-track-a-websites-traffic/</li><li>Purely Branded (2014, November 1) <em>Top 10 Website Analytics You Should Be Measuring AND Learning From</em> Retrieved from https://www.purelybranded.com/insights/top-10-website-analytics-you-should-be-measuring-and-learning-from/</li>
+    <ul><li>Asay, Matt (2018, February 7) <em>Who really contributes to open source.</em> Retrieved from: https://www.infoworld.com/article/3253948/who-really-contributes-to-open-source.html</li>
       <li>Visualization Library: Plotly https://plot.ly/</li>
-      <li>Data from SimilarWeb https://www.similarweb.com/website/coinbase.com</li>
-      <li>CSV reading based on the FileReader class https://blog.teamtreehouse.com/reading-files-using-the-html5-filereader-api</li>
+      <li>Söderberg, Johan (2007, March 8) <em>Copyleft vs. Copyright</em> Retrieved from: https://firstmonday.org/article/view/938/860</li>
+      <li>Vanheuverswyn, Maarten (2007, September 24) <em>The problem with the computer industry under capitalism - Free Software the answer?</em> Retrieved from: https://www.marxist.com/computer-industry-capitalism-free-software240907.htm</li>
+      <li>Stallman, Richard (1983, September 27) <em>Initial GNU announcement </em> Retrieved from https://www.gnu.org/gnu/initial-announcement.html.
     </ul>
 </div>
 <span class="foot">
